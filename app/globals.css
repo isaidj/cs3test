@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
+  --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
@@ -25,7 +25,9 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
-
+/* body {
+  @apply bg-gray-900 text-blue-300;
+} */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
