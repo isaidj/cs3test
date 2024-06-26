@@ -14,15 +14,6 @@ html {
   font-family: "Poppins", sans-serif;
 }
 
-body {
-  background: var(--background);
-  height: 100vh;
-  display: flex;
-
-  /* justify-content: center;
-  align-items: center; */
-}
-
 * {
   box-sizing: border-box;
 }
@@ -33,8 +24,15 @@ body {
   max-width: 100%;
   padding: 1rem;
   border-radius: 1rem;
-  overflow: hidden;
+  overflow: visible;
   background-color: var(--background-item);
+  height: auto;
+  /* margin-bottom: 10rem; */
+}
+.dropdown--open {
+  border-radius: 1rem;
+  z-index: 100;
+  position: absolute;
 }
 
 .main-item {
@@ -48,16 +46,37 @@ body {
   font-size: 0.9rem;
 
   font-weight: 500;
-  gap: 1rem;
+  gap: 0.5rem;
   border: none;
   width: 100%;
   background: var(--background-item);
   transition: all ease-in-out 0.25s;
   color: var(--item-non-hover);
 }
-.main-item > span {
+.main-item__text {
+  text-decoration: underline;
   text-align: left;
 }
+.main-item__text:hover {
+  color: rgb(147 197 253);
+}
+.main-item__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+  fill: var(--item-non-hover);
+  transition: all ease-in-out 0.25s;
+  border-radius: 50px;
+  justify-content: center;
+  text-align: center;
+}
+.main-item__icon:hover {
+  background-color: rgb(147 197 253);
+}
+/* .main-item > span {
+  text-align: left;
+} */
 
 .main-item:hover {
   background-color: var(--background-item-hover);
@@ -111,12 +130,13 @@ body {
 }
 
 .dropdown > ul > li {
-  height: 2rem;
+  height: auto;
   display: flex;
   width: 100%;
   font-size: 0.9rem;
   align-items: center;
   border-left: 2px solid var(--line-color);
+  margin-bottom: 0.1rem;
   @apply bg-gray-900 text-blue-300;
 }
 

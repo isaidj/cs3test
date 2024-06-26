@@ -24,7 +24,7 @@ interface PathFromRoot {
   name: string;
 }
 
-interface ChildrenCategory {
+export interface ChildrenCategory {
   id: string;
   name: string;
   total_items_in_this_category: number;

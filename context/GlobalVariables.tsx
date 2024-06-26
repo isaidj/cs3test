@@ -7,7 +7,7 @@ import React, {
   useEffect,
 } from "react";
 
-import { CategoryItem, CategoryInfo } from "../types/CategoriesIterface";
+import { CategoryItem } from "../types/CategoriesInterface";
 
 export type GlobalVariablesType = {
   categories: CategoryItem[] | null;

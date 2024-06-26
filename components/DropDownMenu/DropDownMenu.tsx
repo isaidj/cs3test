@@ -1,26 +1,56 @@
 "use client";
-import { CategoryInfo, CategoryItem } from "@/types/CategoriesIterface";
+import {
+  CategoryInfo,
+  CategoryItem,
+  ChildrenCategory,
+} from "@/types/CategoriesInterface";
 import "./DropDownMenu.css";
 import { useEffect, useState } from "react";
+
+import { CloseOutlined, MenuOutlined } from "@mui/icons-material";
 import Link from "next/link";
+
 export const DropDownMenu = ({
   categories,
 }: {
   categories: CategoryItem[];
 }) => {
+  console.log(categories);
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <nav className="dropdown">
-      {categories.map((category) => (
-        <DropDownMenuItem key={category.id} category={category} />
-      ))}
-    </nav>
+    <>
+      <button
+        className="hambuger absolute top-5 left-5  md:hidden"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {isOpen ? (
+          <CloseOutlined color="primary" />
+        ) : (
+          <MenuOutlined color="primary" />
+        )}
+      </button>
+      <div className="overflow-hidden ">
+        <nav className={`dropdown  md:block ${isOpen ? "dropdown--open" : ""}`}>
+          {categories.map((category) => (
+            <DropDownMenuItem key={category.id} category={category} level={0} />
+          ))}
+        </nav>
+      </div>
+    </>
   );
 };
 
 export default DropDownMenu;
 
-const DropDownMenuItem = ({ category }: { category: CategoryItem }) => {
+const DropDownMenuItem = ({
+  category,
+  level,
+}: {
+  category: CategoryItem;
+  level: number;
+}) => {
   const [categoryInfo, setCategoryInfo] = useState<CategoryInfo | null>(null);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const fetchCategory = async (id: string) => {
@@ -30,7 +60,6 @@ const DropDownMenuItem = ({ category }: { category: CategoryItem }) => {
     }
     const data = await res.json();
     setCategoryInfo(data.product);
-
     return data;
   };
 
@@ -41,22 +70,50 @@ const DropDownMenuItem = ({ category }: { category: CategoryItem }) => {
       }
     }
   }, [isOpen]);
+  const hasChildrens = (level: number, categoryInfo: CategoryInfo | null) => {
+    if (level === 0) {
+      if (isOpen) {
+        return "-";
+      } else {
+        return "+";
+      }
+    }
+    if (level > 0) {
+      if (categoryInfo) {
+        if (categoryInfo.children_categories.length > 0) {
+          if (isOpen) {
+            return "-";
+          } else {
+            return "+";
+          }
+        }
+      } else {
+        return "+";
+      }
+    }
+  };
 
   return (
     <>
-      <button
+      <div
         className={`main-item ${isOpen ? "main-item--open" : ""}`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        {<span className="icon">{isOpen ? "-" : "+"}</span>}
-        <span>{category.name}</span>
-      </button>
+        <span className="main-item__icon">
+          {hasChildrens(level, categoryInfo)}
+        </span>
+
+        <Link className="main-item__text" href={`/${category.id}`}>
+          {category.name}
+        </Link>
+      </div>
       <ul>
         {categoryInfo &&
           categoryInfo.children_categories.map((child) => (
-            <li key={child.id}>
-              <Link href={`/category/${child.id}`}>{child.name}</Link>
-            </li>
+            // <li key={child.id}>
+            //   <Link href={`/${child.id}`}>{child.name}</Link>
+            // </li>
+            <DropDownMenuItem category={child} level={level + 1} />
           ))}
       </ul>
     </>
