@@ -9,6 +9,8 @@ Se encuentra desarrollado en React.js y Next.js, con Tailwind CSS para los estil
 Se utilizó el mismo next.js para el manejo de rutas API, tanto el front como el back se encuentran en el mismo proyecto.
 Se revalida la información de la API de Mercado Libre cada 60 segundos, para evitar hacer consultas innecesarias. se guarda en cache.
 
+Este proyecto se encuentra desplegado en Vercel, en el siguiente link: [https://cs3test.vercel.app](https://cs3test.vercel.app/)
+
 ## Recursos
 
 El `Seller ID` de la tienda del cliente es `179571326`, y la API de Mercado Libre tiene un endpoint que permite buscar productos de un vendedor en particular: `https://api.mercadolibre.com/sites/MLA/search?seller_id=179571326`. Además, nos comentaron que al ingresar al endpoint desde el navegador podemos ver la respuesta en formato JSON junto con algo de información. El resto de la documentación de la API está disponible en [este link](https://developers.mercadolibre.com.ar/es_ar/items-y-busquedas).
