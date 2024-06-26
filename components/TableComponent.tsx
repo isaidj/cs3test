@@ -267,7 +267,9 @@ const TableComponent: React.FC<TableComponentProps> = ({ idCategory }) => {
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
+                ActionsComponent={(props) => (
+                  <TablePaginationActions {...props} isMobile={isMobile} />
+                )}
                 sx={{ color: "white" }}
               />
             </StyledTableRow>
