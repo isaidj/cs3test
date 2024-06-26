@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import {
   Table,
   TableBody,
@@ -26,6 +26,17 @@ import { useRouter } from "next/navigation";
 interface TableComponentProps {
   idCategory: string;
 }
+//Se agrega suspense para evitar que la pagina quede en blanco hasta que se obtengan los valores useSearchParams y usePathname
+export const TableSuspense: React.FC<{ idCategory: string }> = ({
+  idCategory,
+}) => {
+  return (
+    <Suspense>
+      <TableComponent idCategory={idCategory} />
+    </Suspense>
+  );
+};
+export default TableSuspense;
 
 const TableComponent: React.FC<TableComponentProps> = ({ idCategory }) => {
   const router = useRouter();
@@ -279,5 +290,3 @@ const TableComponent: React.FC<TableComponentProps> = ({ idCategory }) => {
     </div>
   );
 };
-
-export default TableComponent;
