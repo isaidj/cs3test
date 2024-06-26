@@ -113,7 +113,11 @@ const DropDownMenuItem = ({
             // <li key={child.id}>
             //   <Link href={`/${child.id}`}>{child.name}</Link>
             // </li>
-            <DropDownMenuItem category={child} level={level + 1} />
+            <DropDownMenuItem
+              category={child}
+              level={level + 1}
+              key={child.id}
+            />
           ))}
       </ul>
     </>
