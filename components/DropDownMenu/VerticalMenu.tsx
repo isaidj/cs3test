@@ -15,6 +15,9 @@ const fetchCategories = async (): Promise<CategoryItem[]> => {
 };
 
 const VerticalMenu = async () => {
+  if (!BASE_API_URL) {
+    return null;
+  }
   const categories = await fetchCategories();
 
   return <DropDownMenu categories={categories} />;
