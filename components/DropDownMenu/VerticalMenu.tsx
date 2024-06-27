@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
-import { CategoryItem, CategoryInfo } from "@/types/CategoriesInterface";
+import React from "react";
+import { CategoryItem } from "@/types/CategoriesInterface";
 import DropDownMenu from "./DropDownMenu";
 import { BASE_API_URL } from "@/utils/constants";
 
-//se puede renderizar desde el servidor y queda mucho mejor pero no me dio tiempo de corregir un error en el despliegue de vercel con la url del api,
-//asi que renderice el componente desde el cliente con useEffect
 const fetchCategories = async (): Promise<CategoryItem[]> => {
   const res = await fetch(`${BASE_API_URL}/api/categories`);
   if (!res.ok) {

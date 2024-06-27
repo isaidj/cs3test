@@ -1,9 +1,5 @@
 "use client";
-import {
-  CategoryInfo,
-  CategoryItem,
-  ChildrenCategory,
-} from "@/types/CategoriesInterface";
+import { CategoryInfo, CategoryItem } from "@/types/CategoriesInterface";
 import "./DropDownMenu.css";
 import { useEffect, useState } from "react";
 
@@ -111,9 +107,6 @@ const DropDownMenuItem = ({
       <ul>
         {categoryInfo &&
           categoryInfo.children_categories.map((child) => (
-            // <li key={child.id}>
-            //   <Link href={`/${child.id}`}>{child.name}</Link>
-            // </li>
             <DropDownMenuItem
               category={child}
               level={level + 1}
