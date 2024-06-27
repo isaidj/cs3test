@@ -37,7 +37,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f138; /* Color del track del scrollbar */
+  background: #00000003; /* Color del track del scrollbar */
 }
 
 ::-webkit-scrollbar-thumb {

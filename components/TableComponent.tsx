@@ -165,14 +165,15 @@ const TableComponent: React.FC<TableComponentProps> = ({ idCategory }) => {
 
   //------------------- Render for desktop -------------------
   return (
-    <div className="w-full shadow-md m-4">
+    <div className="w-full shadow-md m-4 ">
       <TableContainer
         component={Paper}
-        className="shadow-md rounded-2xl"
+        className=""
         sx={{
           color: "white",
-          backgroundColor: "transparent",
           height: "calc(100% - 40px)",
+          borderRadius: "12px",
+          backgroundColor: "transparent",
         }}
       >
         <Table
@@ -200,7 +201,7 @@ const TableComponent: React.FC<TableComponentProps> = ({ idCategory }) => {
             </StyledTableRow>
           </TableHead>
 
-          <TableBody sx={{ overflowY: "auto" }}>
+          <TableBody>
             {loading ? (
               [...Array(rowsPerPage)].map((_, index) => (
                 <StyledTableRow key={index}>
