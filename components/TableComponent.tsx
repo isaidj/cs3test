@@ -192,7 +192,7 @@ const TableComponent: React.FC<TableComponentProps> = ({ idCategory }) => {
               ].map((header) => (
                 <StyledTableCell
                   key={header.key}
-                  className="bg-gray-900 text-slate-50 font-semibold"
+                  className="bg-gray-600 text-slate-50 font-semibold"
                   style={{ width: columnWidths[header.key] }}
                 >
                   {header.label}
