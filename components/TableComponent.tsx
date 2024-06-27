@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, Suspense } from "react";
+import React, { Suspense } from "react";
 import {
   Table,
   TableBody,
@@ -14,20 +14,17 @@ import {
 } from "@mui/material";
 
 import TablePaginationActions from "./TablePaginationActions";
-import { Result } from "../types/ProductInterface";
 import Image from "next/image";
 import Link from "next/link";
 import { formatCurrency } from "../utils/formatCurrency";
 import ProductCard from "./ProductCard";
 import { StyledTableCell, StyledTableRow } from "./StyledTableComponents";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-import { BASE_API_URL } from "@/utils/constants";
+import { useProductTable } from "../hooks/useProductTable";
 
 interface TableComponentProps {
   idCategory: string;
 }
-//Se agrega suspense para evitar que la pagina quede en blanco hasta que se obtengan los valores useSearchParams y usePathname
+
 export const TableSuspense: React.FC<{ idCategory: string }> = ({
   idCategory,
 }) => {
@@ -37,29 +34,21 @@ export const TableSuspense: React.FC<{ idCategory: string }> = ({
     </Suspense>
   );
 };
+
 export default TableSuspense;
 
 const TableComponent: React.FC<TableComponentProps> = ({ idCategory }) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const pathName = usePathname();
-  //------------------- Pagination -------------------
-  const [page, setPage] = useState<number>(
-    searchParams.get("page") ? parseInt(searchParams.get("page") as string) : 0
-  );
-  const [rowsPerPage, setRowsPerPage] = useState<number>(
-    searchParams.get("limit")
-      ? parseInt(searchParams.get("limit") as string)
-      : 10
-  );
-  //------------------- Products ----------------
-  const [products, setProducts] = useState<Result[]>([]);
-  const [totalCount, setTotalCount] = useState(0);
-  //------------------- Loading state -------------------
-  const [loading, setLoading] = useState(true);
-  //------------------- Mobile detection -------------------
-  const [isMobile, setIsMobile] = useState(false);
-  //------------------- Size of columns -------------------
+  const {
+    page,
+    rowsPerPage,
+    products,
+    totalCount,
+    loading,
+    isMobile,
+    handleChangePage,
+    handleChangeRowsPerPage,
+  } = useProductTable(idCategory);
+
   const columnWidths: { [key: string]: string } = {
     id: "15%",
     name: "35%",
@@ -68,60 +57,6 @@ const TableComponent: React.FC<TableComponentProps> = ({ idCategory }) => {
     image: "15%",
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    handleResize(); // Check on initial render
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const handleParamsChange = () => {
-    const params = new URLSearchParams();
-    params.append("page", page.toString());
-    params.append("limit", rowsPerPage.toString());
-    router.push(`${pathName}?${params.toString()}`);
-  };
-
-  useEffect(() => {
-    handleParamsChange();
-    const fetchProducts = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(
-          `${BASE_API_URL}/api/products?category=${idCategory}&page=${page}&limit=${rowsPerPage}`
-        );
-        const data = await response.json();
-        setProducts(data.product.results);
-        setTotalCount(data.product.paging.total);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, [idCategory, page, rowsPerPage]);
-
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    // setPage(0);
-  };
-
-  //------------------- Render for mobile -------------------
   if (isMobile) {
     return (
       <div className="w-full m-4 overflow-y-auto">
@@ -164,7 +99,6 @@ const TableComponent: React.FC<TableComponentProps> = ({ idCategory }) => {
     );
   }
 
-  //------------------- Render for desktop -------------------
   return (
     <div className="w-full shadow-md m-4 ">
       <TableContainer
