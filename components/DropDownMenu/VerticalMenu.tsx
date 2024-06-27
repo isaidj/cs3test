@@ -3,7 +3,9 @@ import { CategoryItem, CategoryInfo } from "@/types/CategoriesInterface";
 import DropDownMenu from "./DropDownMenu";
 
 const fetchCategories = async (): Promise<CategoryItem[]> => {
-  const res = await fetch(`${process.env.REACT_DOMAIN}/api/categories`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_REACT_DOMAIN}/api/categories`
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch categories");
