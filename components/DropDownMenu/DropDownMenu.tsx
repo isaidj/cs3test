@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 
 import { CloseOutlined, MenuOutlined } from "@mui/icons-material";
 import Link from "next/link";
+import { BASE_API_URL } from "@/utils/constants";
 
 export const DropDownMenu = ({
   categories,
@@ -54,7 +55,7 @@ const DropDownMenuItem = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const fetchCategory = async (id: string) => {
-    const res = await fetch(`api/categories/category?id=${id}`);
+    const res = await fetch(`${BASE_API_URL}/api/categories/category?id=${id}`);
     if (!res.ok) {
       throw new Error("Failed to fetch category");
     }
