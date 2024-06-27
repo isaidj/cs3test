@@ -22,6 +22,7 @@ import ProductCard from "./ProductCard";
 import { StyledTableCell, StyledTableRow } from "./StyledTableComponents";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { BASE_API_URL } from "@/utils/constants";
 
 interface TableComponentProps {
   idCategory: string;
@@ -91,7 +92,7 @@ const TableComponent: React.FC<TableComponentProps> = ({ idCategory }) => {
       setLoading(true);
       try {
         const response = await fetch(
-          `/api/products?category=${idCategory}&page=${page}&limit=${rowsPerPage}`
+          `${BASE_API_URL}/api/products?category=${idCategory}&page=${page}&limit=${rowsPerPage}`
         );
         const data = await response.json();
         setProducts(data.product.results);

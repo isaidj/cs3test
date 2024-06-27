@@ -8,6 +8,7 @@ import React, {
 } from "react";
 
 import { CategoryItem } from "../types/CategoriesInterface";
+import { BASE_API_URL } from "@/utils/constants";
 
 export type GlobalVariablesType = {
   categories: CategoryItem[] | null;
@@ -26,7 +27,7 @@ export const GlobalVariablesProvider: React.FC<{
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const res = await fetch(`${process.env.API_URL}/api/categories`);
+      const res = await fetch(`${BASE_API_URL}/api/categories`);
       if (!res.ok) {
         throw new Error("Failed to fetch categories");
       }
