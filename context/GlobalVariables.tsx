@@ -26,9 +26,7 @@ export const GlobalVariablesProvider: React.FC<{
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_REACT_DOMAIN}/api/categories`
-      );
+      const res = await fetch(`${process.env.API_URL}/api/categories`);
       if (!res.ok) {
         throw new Error("Failed to fetch categories");
       }

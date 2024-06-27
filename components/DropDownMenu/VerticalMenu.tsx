@@ -4,7 +4,7 @@ import DropDownMenu from "./DropDownMenu";
 
 const fetchCategories = async (): Promise<CategoryItem[]> => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_REACT_DOMAIN}/api/categories`
+    `${process.env.API_URLAPI_URL}/api/categories`
   );
 
   // if (!res.ok) {
