@@ -25,11 +25,16 @@ interface TableComponentProps {
   idCategory: string;
 }
 
+const fallback = (
+  <div className="w-full h-full flex items-center justify-center bg-gray-700 animate-pulse m-4 rounded-xl">
+    <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-100"></div>
+  </div>
+);
 export const TableSuspense: React.FC<{ idCategory: string }> = ({
   idCategory,
 }) => {
   return (
-    <Suspense>
+    <Suspense fallback={fallback}>
       <TableComponent idCategory={idCategory} />
     </Suspense>
   );
